@@ -1,0 +1,14 @@
+{
+  "name": "guilda_bot",
+  "version": "1.0.0",
+  "description": "A Monster Hunter discord Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "BrigitteLPB",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.5.1"
+  }
+}
