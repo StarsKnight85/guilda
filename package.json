@@ -1,14 +1,16 @@
 {
-  "name": "guilda_bot",
+  "name": "guildo",
   "version": "1.0.0",
   "description": "A Monster Hunter discord Bot",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
   },
   "author": "BrigitteLPB",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^11.5.1"
-  }
+  },
+  "devDependencies": {}
 }
