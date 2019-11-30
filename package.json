@@ -1,6 +1,6 @@
 {
-  "name": "guildo",
-  "version": "1.0.0",
+  "name": "guilda",
+  "version": "0.3",
   "description": "A Monster Hunter discord Bot",
   "main": "main.js",
   "scripts": {
