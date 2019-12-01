@@ -10,25 +10,26 @@ Guilda = function(Client){
   this.PREFIX = "g!"
   this.channelList = new ChannelList;
 
-  // methods for usefull inter-commands
+  // methods for usefull interne-commands
     // send a log msg
   this.logAct = function(msg, object = null, adminChannel = []){
     var d = new Date();
-    txt = "#LogAct: at " + d.toUTCString() + "\n>>";
+    date = "<" + d.toDateString() + " " + d.toTimeString() + ">"
+    txt = "#LogAct: at " + date + "\n>>";
     try{
       for(i=0; i<adminChannel.length; i++){
         if(object === this.message){
-          txt = "#LogAct: message from " + message.author.tag + " in the channel " + message.channel.name + ": " + message.channel.id + " of " + message.guild.name + ": " + message.guild.id + " at " + d.toUTCString() + "\n>>";
-          object.channel.send(txt + msg)
+          txt = "#LogAct: message from <" + this.message.author.tag + "> in the channel <" + this.message.channel.name + ": " + this.message.channel.id + "> of <" + this.message.guild.name + ": " + this.message.guild.id + "> at " + date + "\n>>";
+          object.guild.channels.get(adminChannel[i]).send(txt + msg)
         };
         if(object === this.Client){
           object.channels.get(adminChannel[i]).send(txt + msg)
         };  
       };
-      console.log(txt, msg)
+      console.log(txt, msg, '\n')
     }catch(err){
-      console.log(err)
-      console.log(txt, msg);
+      //console.log(err)
+      console.log(txt, msg, '\n');
     };
   };
     // check permisions of the author
@@ -41,7 +42,7 @@ Guilda = function(Client){
           }else{
             txt = "#CheckPermision: "
           }
-          this.logAct(txt + permision, message, this.channelList.adminChannel)
+          this.logAct(txt + permisions, null, this.channelList.adminChannel(message.guild))
           return true
         };
       };

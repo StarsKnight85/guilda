@@ -6,9 +6,6 @@ GuildaMain = function(guilda){
     
     // methods
     this.commands = new GuildaMeth(guilda);
-    this.name = function(){
-        guilda.logAct(guilda.name)
-    }
 
     this.start = function(){
         if(guilda.message.content.startsWith(guilda.PREFIX)){

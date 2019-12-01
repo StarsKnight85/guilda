@@ -6,12 +6,12 @@ GuildaMeth = function(guilda){
     //methods
     this.checkAdmin = function(){
         if(guilda.checkAdmin(guilda.message)){
-            guilda.logAct("#CheckAdmin", guilda.message, guilda.channelList.adminChannel())
+            guilda.logAct("#CheckAdmin", guilda.message, guilda.channelList.adminChannel(guilda.message.guild.name))
         }
     }
 
     this.checkUser = function(){
-        guilda.logAct("#checkUser", guilda.message, guilda.channelList.adminChannel())
+        guilda.logAct("#checkUser", guilda.message, guilda.channelList.adminChannel(guilda.message.guild.name))
     };
 
     this.addChannel = function(guilda, args){

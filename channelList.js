@@ -1,5 +1,5 @@
 /*channelList = {
-  message.guild.name = {
+  message.guild = {
       message.channel.name = {
           id: int,
           admin: bool
@@ -20,7 +20,7 @@ ChannelList = function(){
   };
 
   //adding methods
-  this.adminChannel = function(){
+  this.adminGuild = function(){
     listOfChannelAdmin = [];
     // guild seclection
     for(guildSelctor in this){
@@ -31,6 +31,20 @@ ChannelList = function(){
             listOfChannelAdmin.push(this[guildSelctor][channelSelector]["id"]);
     };};};};
     return listOfChannelAdmin;
+  };
+
+  this.adminChannel = function(guild){ // guild = guilda.message.guild
+    listOfChannelAdmin = []
+    try{
+      for(channelSelector in this[guild]){
+        if(this[guild][channelSelector] instanceof Channel && this[guild][channelSelector]["admin"]){
+          listOfChannelAdmin.push(this[guild][channelSelector]["id"]);
+        };
+      };
+    }catch(err){
+      console.log("err:", err)
+    };
+    return listOfChannelAdmin
   };
   // guildName = name(str) | channel = [name(str), id(int)] | admin = bool
   this.addChannel = function(guildName, channel, admin = false){
