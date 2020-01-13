@@ -1,7 +1,7 @@
 // setup for guilda
 setup = {
     name: "Guilda",
-    token: 'NTg5ODk3ODM1MTUyMDE1Mzk0.XePR0A.Wu7mpIKielGXpOA4XpK0PmtUZ8E',
+    token: process.env.TOKEN,
     activity:  'a Monster Hunter: World',
     PREFIX: 'g!',
     Guilds: {
