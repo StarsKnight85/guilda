@@ -1,25 +1,36 @@
-const {Client, Attachment, RichEmbed} = require('discord.js');
-// const guilda = require('./function.js');
-const Guilda = require('./guilda.js');
+const Discord = require('discord.js');
+const bot = new Discord.Client();
 const Setup = require('./setup.js')
-const bot = new Client();
-const guilda = new Guilda(bot);
-
 const token = Setup.token;
+const PREFIX = Setup.PREFIX;
 
-// VARIABLES
-Setup.setGuilds(guilda)
+const fs = require('fs');
+bot.commands = new Discord.Collection();
 
-// boot
+const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
+for(const file of commandFiles){
+    const command = require(`./commands/${file}`);
+    bot.commands.set(command.name, command);
+}
+
 bot.on('ready', () => {
-    guilda.logAct(`${bot.user.tag} is online!`, bot, guilda.channelList.adminGuild());
+    console.log(`${bot.user.tag} is online!`);
     bot.user.setActivity(Setup.activity, {type : 'PLAYING'}).catch(console.error);
-  });
-
-//commands
-bot.on('message', message => {
-    guilda.message = message
-    guilda.main.start()
 });
-
+ 
+bot.on('message', message => {
+    if(message.content.startsWith(PREFIX)){
+        let args = message.content.substring(PREFIX.length).split(" ");
+    
+        switch (args[0]) {
+            case "ping":
+                bot.commands.get('ping').execute(message, args);
+            break;
+            case "hello":
+                bot.commands.get('hello').execute(message, args);
+            break;
+        }
+    }
+});
+ 
 bot.login(token);

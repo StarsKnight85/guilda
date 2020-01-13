@@ -1,8 +1,9 @@
-// setup for guildo
+// setup for guilda
 setup = {
     name: "Guilda",
-    token: process.env.TOKEN,
+    token: 'NTg5ODk3ODM1MTUyMDE1Mzk0.XePR0A.Wu7mpIKielGXpOA4XpK0PmtUZ8E',
     activity:  'a Monster Hunter: World',
+    PREFIX: 'g!',
     Guilds: {
         Salon_MH: {
             name: "Salon MH",
@@ -25,7 +26,7 @@ setup = {
             id : '590176875750621204',
             Channels : {
                 admin_command_bot: {
-                    name: "admin_command_bot",
+                    name: "admin-command-bot",
                     id: '643054631152517134',
                     admin: true
                 },
