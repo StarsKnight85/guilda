@@ -25,9 +25,11 @@ guilda.on('message', message => {
         let args = message.content.substring(guilda.setup.PREFIX.length).split(" ");
         if (guilda.commands.get(args[0]).permision == "admin"){
             if (guilda.functions.checkAdmin()){//CHANGE
+                console.log("<Command "+args[0]+" by "+message.author.tag+" at "+guilda.functions.date()+" admin:true>")
                 guilda.commands.get(args[0]).execute(message, args);
             };
         }else if (guilda.commands.get(args[0]).permision == "all"){
+            console.log("<Command "+args[0]+" by"+message.author.tag+" at "+guilda.functions.date()+" admin:false>")
             guilda.commands.get(args[0]).execute(message, args);
         };
     };
