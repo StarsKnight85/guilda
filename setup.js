@@ -1,5 +1,5 @@
 // setup for guilda
-setup = {
+module.exports = {
     name: "Guilda",
     token: process.env.TOKEN,
     activity:  'a Monster Hunter: World',
@@ -64,4 +64,3 @@ setup = {
         }
     }
 }
-module.exports = setup

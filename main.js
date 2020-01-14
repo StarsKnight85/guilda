@@ -1,36 +1,36 @@
 const Discord = require('discord.js');
-const bot = new Discord.Client();
+const guilda = new Discord.Client();
 const Setup = require('./setup.js')
-const token = Setup.token;
-const PREFIX = Setup.PREFIX;
+guilda.setup = Setup;
+const GuildaFunction = require('./functions.js')
+guilda.functions = GuildaFunction;
+
+const token = guilda.setup.token;
 
 const fs = require('fs');
-bot.commands = new Discord.Collection();
-
+guilda.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
 for(const file of commandFiles){
     const command = require(`./commands/${file}`);
-    bot.commands.set(command.name, command);
+    guilda.commands.set(command.name, command);
 }
 
-bot.on('ready', () => {
-    console.log(`${bot.user.tag} is online!`);
-    bot.user.setActivity(Setup.activity, {type : 'PLAYING'}).catch(console.error);
+guilda.on('ready', () => {
+    console.log(`${guilda.user.tag} is online at ${guilda.functions.date()}`);
+    guilda.user.setActivity(guilda.setup.activity.name, {type : guilda.setup.activity.type}).catch(console.error);
 });
- 
-bot.on('message', message => {
-    if(message.content.startsWith(PREFIX)){
-        let args = message.content.substring(PREFIX.length).split(" ");
-    
-        switch (args[0]) {
-            case "ping":
-                bot.commands.get('ping').execute(message, args);
-            break;
-            case "hello":
-                bot.commands.get('hello').execute(message, args);
-            break;
-        }
-    }
+
+guilda.on('message', message => {
+    if(message.content.startsWith(guilda.setup.PREFIX)){
+        let args = message.content.substring(guilda.setup.PREFIX.length).split(" ");
+        if (guilda.commands.get(args[0]).permision == "admin"){
+            if (guilda.functions.checkAdmin()){//CHANGE
+                guilda.commands.get(args[0]).execute(message, args);
+            };
+        }else if (guilda.commands.get(args[0]).permision == "all"){
+            guilda.commands.get(args[0]).execute(message, args);
+        };
+    };
 });
- 
-bot.login(token);
+
+guilda.login(token);
