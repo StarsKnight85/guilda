@@ -1,8 +1,8 @@
 module.exports = {
     name: 'ping',
     description: "says pong!",
-    permision: "all",
-    execute(message, args){
+    permission: "all",
+    execute(guilda, message, args){
         message.channel.send('pong!');
     }
 }

@@ -1,8 +1,8 @@
 module.exports = {
     name: 'pong',
     description: "says ping!",
-    permision: "admin",
-    execute(message, args){
+    permission: "admin",
+    execute(guilda, message, args){
         message.channel.send('ping!');
     }
 }
