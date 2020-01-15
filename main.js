@@ -23,15 +23,19 @@ guilda.on('ready', () => {
 guilda.on('message', message => {
     if(message.content.startsWith(guilda.setup.PREFIX)){
         let args = message.content.substring(guilda.setup.PREFIX.length).split(" ");
-        if (guilda.commands.get(args[0]).permision == "admin"){
-            if (guilda.functions.checkAdmin()){//CHANGE
-                console.log("<Command "+args[0]+" by "+message.author.tag+" at "+guilda.functions.date()+" admin:true>")
+        try{
+            if (guilda.commands.get(args[0]).permision == "admin"){
+                if (guilda.functions.checkAdmin(message)){//CHANGE
+                    guilda.functions.log(message,args[0],guilda.functions.date(),true)
+                    guilda.commands.get(args[0]).execute(message, args);
+                };
+            }else if (guilda.commands.get(args[0]).permision == "all"){
+                guilda.functions.log(message,args[0],guilda.functions.date(),false)
                 guilda.commands.get(args[0]).execute(message, args);
             };
-        }else if (guilda.commands.get(args[0]).permision == "all"){
-            console.log("<Command "+args[0]+" by"+message.author.tag+" at "+guilda.functions.date()+" admin:false>")
-            guilda.commands.get(args[0]).execute(message, args);
-        };
+        }catch(err){
+            //pass
+        }
     };
 });
 
