@@ -1,6 +1,6 @@
 {
   "name": "Guilda",
-  "token": "process.env.TOKEN",
+  "token": "web",
   "activity": {
     "type": "PLAYING",
     "name": "Monster Hunter: World Iceborne"
