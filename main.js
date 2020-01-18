@@ -10,7 +10,7 @@ guilda.functions = require('./functions.js')
 guilda.setting = guilda.functions.loadData("./setting.json");
 
 //token
-if (guilda.setting.token === "web"){
+if (guilda.setting.token == "web"){
     guilda.setting.token = process.env.TOKEN;
 }
 
