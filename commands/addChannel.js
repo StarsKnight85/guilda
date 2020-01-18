@@ -3,6 +3,8 @@ module.exports = {
     description: "permit to your bot to speek in this channel, admin is to turn this channel for admin: \"addChannel <admin>\"",
     permission: "admin",
     execute(guilda, message, args){
+        guilda.functions.newEmbed(guilda)
+        guilda.embed.setTitle("addChannel")
         var adminPerm = false
         if (args[1] == "admin"){
             adminPerm = true
@@ -22,6 +24,12 @@ module.exports = {
             admin: adminPerm
         }
         guilda.functions.writeData("./setting.json",guilda.setting)
-        message.channel.send(`Channel <${message.channel.name}> rajouté! <admin:${guilda["setting"]["Guilds"][message.guild.id]["Channels"][message.channel.id]["admin"]}>`)
+        if (guilda["setting"]["Guilds"][message.guild.id]["Channels"][message.channel.id]["admin"]){
+            adminTxt = "🔐"
+        }else{
+            adminTxt = ""
+        }
+        guilda.embed.addField("success",`${adminTxt} Channel <${message.channel.name}> rajouté!`)
+        message.channel.sendEmbed(guilda.embed)
     }
 }

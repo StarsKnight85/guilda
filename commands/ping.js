@@ -3,6 +3,8 @@ module.exports = {
     description: "says pong!",
     permission: "all",
     execute(guilda, message, args){
-        message.channel.send('pong!');
+        guilda.functions.newEmbed(guilda)
+        guilda.embed.setTitle("pong")
+        message.channel.sendEmbed(guilda.embed)
     }
 }

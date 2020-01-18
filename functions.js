@@ -1,3 +1,4 @@
+const Discord = require("discord.js")
 module.exports = {
     log: function(message, args, date, admin){
         console.log(">>Command <"+args+"> by <"+message.author.tag+"> at "+date+" <admin:"+admin+">")
@@ -66,5 +67,8 @@ module.exports = {
         }catch(err){
             return false
         }
+    },
+    newEmbed: function(guilda){
+        guilda.embed = new Discord.RichEmbed()
     }
 };

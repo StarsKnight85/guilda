@@ -52,7 +52,7 @@ guilda.on('message', message => {
                 };    
             }
         }catch(err){
-            console.log(err)//debug
+           console.log('#ERROR',err)//debug
         }
     };
 });
