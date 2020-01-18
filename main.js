@@ -6,9 +6,13 @@ const guilda = new Discord.Client();
 guilda.functions = require('./functions.js')
 // guilda.functions = GuildaFunction;
 
-
 //setting
 guilda.setting = guilda.functions.loadData("./setting.json");
+
+//token
+if (guilda.setting.token === "web"){
+    guilda.setting.token = process.env.TOKEN;
+}
 
 //commands
 guilda.commands = new Discord.Collection();
@@ -53,5 +57,4 @@ guilda.on('message', message => {
     };
 });
 
-// guilda.login(guilda.setting.token);
-guilda.login(process.env.TOKEN);
+guilda.login(guilda.setting.token);
