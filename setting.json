@@ -1,0 +1,43 @@
+{
+  "name": "Guilda",
+  "token": "process.env.TOKEN",
+  "activity": {
+    "type": "PLAYING",
+    "name": "Monster Hunter: World Iceborne"
+  },
+  "PREFIX": "g!",
+  "Guilds": {
+    "590176875750621204": {
+      "name": "Bot arena",
+      "id": "590176875750621204",
+      "Channels": {
+        "643054631152517134": {
+          "name": "admin-command-bot",
+          "id": "643054631152517134",
+          "admin": true
+        },
+        "590176875750621208": {
+          "name": "général",
+          "id": "590176875750621208",
+          "admin": false
+        }
+      }
+    },
+    "643190727383187456": {
+      "name": "Bot Arena 2",
+      "id": "643190727383187456",
+      "Channels": {
+        "643196451563765760": {
+          "name": "admin-command-bot",
+          "id": "643196451563765760",
+          "admin": true
+        },
+        "643190727811268632": {
+          "name": "général",
+          "id": "643190727811268632",
+          "admin": false
+        }
+      }
+    }
+  }
+}
