@@ -53,4 +53,5 @@ guilda.on('message', message => {
     };
 });
 
-guilda.login(guilda.setting.token);
+// guilda.login(guilda.setting.token);
+guilda.login(process.env.TOKEN);
