@@ -1,7 +1,6 @@
 {
   "name": "Guilda",
   "token": "web",
-  "path_to_setting" : "https://github.com/BrigitteLPB/guilda/blob/master/",
   "activity": {
     "type": "PLAYING",
     "name": "un test"
