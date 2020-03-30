@@ -6,7 +6,7 @@
     "type": "PLAYING",
     "name": "un test"
   },
-  "PREFIX": "t!",
+  "PREFIX": "g!",
   "Guilds": {
     "590176875750621204": {
       "name": "Bot arena",
