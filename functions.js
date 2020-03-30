@@ -15,7 +15,9 @@ module.exports = {
     writeData: function(file, data){
         const fs = require('fs');
         let temp = JSON.stringify(data, null, 2);
-        fs.writeFileSync(file, temp);
+        fs.writeFileSync(file, temp, err => {
+            if (err) console.log(err);
+        });
     },
     /*uptdateData: function(file, data){
         const fs = require('fs');
@@ -23,7 +25,7 @@ module.exports = {
         fs.writeFileSync(file, temp);
         return loadData(file)
     },*/
-    checkAdmin: function(message){//PoF
+    checkAdmin: function(message){
         return message.member.hasPermission("ADMINISTRATOR")
     },
     hasPermissionToExe: function (guilda, message, command) {
