@@ -23,13 +23,13 @@ module.exports = {
             id: message.channel.id,
             admin: adminPerm
         }
-        guilda.functions.writeData("./setting.json",guilda.setting)
+        guilda.functions.writeData(guilda.setting.path_to_setting + "setting.json",guilda.setting)
         if (guilda["setting"]["Guilds"][message.guild.id]["Channels"][message.channel.id]["admin"]){
             adminTxt = "🔐"
         }else{
             adminTxt = ""
         }
         guilda.embed.addField("success",`${adminTxt} Channel <${message.channel.name}> rajouté!`)
-        message.channel.sendEmbed(guilda.embed)
+        message.channel.send(guilda.embed)
     }
 }

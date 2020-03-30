@@ -38,7 +38,7 @@ module.exports = {
         }
         try{
             if (guilda["embed"]["fields"][0]["name"]){
-                message.channel.sendEmbed(guilda.embed)
+                message.channel.send(guilda.embed)
             }
         }catch(err){
 

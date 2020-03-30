@@ -5,6 +5,6 @@ module.exports = {
     execute(guilda, message, args){
         guilda.functions.newEmbed(guilda)
         guilda.embed.setTitle("ping!")
-        message.channel.sendEmbed(guilda.embed)
+        message.channel.send(guilda.embed)
     }
 }

@@ -1,11 +1,12 @@
 {
   "name": "Guilda",
   "token": "web",
+  "path_to_setting" : "https://github.com/BrigitteLPB/guilda/blob/master/",
   "activity": {
     "type": "PLAYING",
-    "name": "Monster Hunter: World Iceborne"
+    "name": "un test"
   },
-  "PREFIX": "g!",
+  "PREFIX": "t!",
   "Guilds": {
     "590176875750621204": {
       "name": "Bot arena",
@@ -19,7 +20,7 @@
         "590176875750621208": {
           "name": "général",
           "id": "590176875750621208",
-          "admin": false
+          "admin": true
         }
       }
     },

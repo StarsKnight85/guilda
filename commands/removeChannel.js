@@ -4,6 +4,6 @@ module.exports = {
     permission: "admin",
     execute(guilda, message, args){
         delete guilda["setting"]["Guilds"][message.guild.id]["Channels"][message.channel.id]
-        guilda.functions.writeData("./setting.json",guilda.setting)
+        guilda.functions.writeData(guilda.setting.path_to_setting + "setting.json",guilda.setting)
     }
 }
