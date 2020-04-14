@@ -1,20 +1,26 @@
 module.exports = {
-    name: "prefix",
-    description: "set the prefix for the bot",
-    permission: "admin",
+    name: 'prefix',
+    description: 'change le préfix du bot',
+    permission: 'admin',
+    limitedLoactionForExe : true,
     execute(guilda, message, args){
-        guilda.functions.newEmbed(guilda)
-        guilda.embed.setTitle("Prefix")
-        if (args[1] && guilda.setting.PREFIX != args[1]){
-            guilda.setting.PREFIX = args[1]
-            guilda.functions.writeData("./setting.json",guilda.setting)
-            tempObj = guilda.functions.loadData("./setting.json")
-            if (tempObj.PREFIX == guilda.setting.PREFIX){
-                guilda.embed.addField("Préfix changer pour:",tempObj.PREFIX)
-            }
+        //init
+        const {RichEmbed} = require('discord.js');
+        const Request = require('../Request.js');
+
+        const embed = new RichEmbed();
+        embed.setTitle('Préfix');
+        //bot
+        if (args[1] && guilda[0].setting.prefix != args[1]){
+            guilda[0].sql_update_data(new Request('`config`', `\`PREFIX\`='${args[1]}'`, `\`NOM\`='${guilda[0].setting.name}'`), (result) => {});
+            guilda[0].setting.prefix = args[1];
+            embed.addField('✅préfix changer pour:',args[1]);
         }else{
-            guilda.embed.addField("#ERROR#","Veuillez précisez le nouveau préfix!")
+            embed.addField('❌ERROR#','Veuillez précisez le nouveau préfix!');
         }
-        message.channel.send(guilda.embed)
+        message.channel.send(embed);
+
+        //end
+        delete embed;
     }
 }

@@ -1,35 +1,42 @@
 module.exports = {
     name: 'addChannel',
-    description: "permit to your bot to speek in this channel, admin is to turn this channel for admin: \"addChannel <admin>\"",
-    permission: "admin",
+    description: 'Ajoute ce channel à la liste des channels du Bot, active l\'admin en précisant \'admin\': \'addChannel <admin>\'',
+    permission: 'admin',
+    limitedLocationForExe : false,
     execute(guilda, message, args){
-        guilda.functions.newEmbed(guilda)
-        guilda.embed.setTitle("addChannel")
-        var adminPerm = false
-        if (args[1] == "admin"){
-            adminPerm = true
+        //init
+        const {RichEmbed} = require('discord.js');
+        const Request = require('../Request.js');
+
+        embed = new RichEmbed();
+        embed.setTitle('addChannel');
+        
+        //code
+        let adminPerm = false
+        if (args[1] == 'admin'){
+            adminPerm = true;
         }
-        if (guilda["setting"]["Guilds"][message.guild.id] === undefined){
-            guilda["setting"]["Guilds"][message.guild.id] = {
-                name: message.guild.name,
-                id: message.guild.id,
-            }
-        }
-        if (guilda["setting"]["Guilds"][message.guild.id]["Channels"] === undefined){
-            guilda["setting"]["Guilds"][message.guild.id]["Channels"] = {}
-        }
-        guilda["setting"]["Guilds"][message.guild.id]["Channels"][message.channel.id] = {
-            name: message.channel.name,
-            id: message.channel.id,
-            admin: adminPerm
-        }
-        guilda.functions.writeData("./setting.json",guilda.setting)
-        if (guilda["setting"]["Guilds"][message.guild.id]["Channels"][message.channel.id]["admin"]){
-            adminTxt = "🔐"
+
+        if (guilda[0].channels.get(message.channel.id) != undefined){
+            //upadate
+            guilda[0].sql_update_data(new Request('`channels`', `\`ADMIN\`=${(adminPerm? 1 : 0)}`, `\`ID_Channel\`=${message.channel.id}`), (result)=>{});
+            guilda[0].channels.get(message.channel.id).admin = adminPerm;
         }else{
-            adminTxt = ""
+            //create
+            guilda[0].sql_create_data(new Request('`channels`', '`ID_Channel`, `NOM_Channel`, `ADMIN`, `ID_Guild`, `NOM_Guild`', null, `'${message.channel.id}', '${message.channel.name}', ${adminPerm}, '${message.guild.id}', '${message.guild.name}'`), (result) => {});
+            guilda[0].channels.set(`${message.channel.id}`, {
+                ID_Channel  : message.channel.id,
+                nom_Channel : message.channel.name,
+                admin       : adminPerm,
+                ID_Guild    : message.guild.id,
+                nom_Guild   : message.guild.name
+            });
         }
-        guilda.embed.addField("success",`${adminTxt} Channel <${message.channel.name}> rajouté!`)
-        message.channel.send(guilda.embed)
+
+        embed.addField('✅success',`${(adminPerm? 'admin' : '')} Channel <${message.channel.name}> rajouté!`);
+        message.channel.send(embed);
+
+        //end
+        delete embed;
     }
 }

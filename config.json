@@ -1,0 +1,16 @@
+{
+    "name" : "Guilda",
+    "token" : "web",
+    "activity" : {
+        "type" : "PALYING",
+        "value" : "MONSTER HUNTER WOLRD : ICEBORNE"
+    },
+    "mysql" : {
+        "guilda_database" : {
+            "host" : "eu-cdbr-west-02.cleardb.net",
+            "user" : "b52c276431881d",
+            "password" : "eb42b16b",
+            "database" : "heroku_f0a1282bc4b9235"
+        }
+    }
+}

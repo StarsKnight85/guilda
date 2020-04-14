@@ -1,10 +1,17 @@
 module.exports = {
     name: 'pan',
-    description: "says pan!",
-    permission: "all",
+    description: 'dit pan!',
+    permission: 'all',
+    limitedLocationForExe : true,
     execute(guilda, message, args){
-        guilda.functions.newEmbed(guilda)
-        guilda.embed.setTitle("🎉PAN!🎉")
-        message.channel.send(guilda.embed)
+        //init
+        const {RichEmbed} = require('discord.js');
+        //code
+        embed = new RichEmbed();
+        embed.setTitle('🎉PAN!🎉');
+        message.channel.send(embed);
+
+        //end
+        delete embed;
     }
 }

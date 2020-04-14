@@ -1,47 +1,67 @@
 module.exports = {
     name: 'help',
-    description: "help command. You can have help with \"help <command>\"",
-    permission: "all",
+    description: 'Commande d\'help, si vous voyez ceci c\' que vous la connaissez ^^, pour de l\'aide su une commande précise utilisez: \'help <commande>\'',
+    permission: 'all',
+    limitedLocationForExe : false,
     execute(guilda, message, args){
-        guilda.functions.newEmbed(guilda)
-        guilda.embed.setTitle('Help');
+        //init
+        const {RichEmbed} = require('discord.js');
+        const embed = new RichEmbed();
+        embed.setTitle('Help🤝');
+        
+        //toutes les commandes
         if (args.length == 1){
-            let commands = guilda.commands.map(commands => commands.name)
+            let commands = guilda[0].commands.map(commands => commands.name);
             for (command of commands){
-                if (guilda.functions.hasPermissionToExe(guilda, message, command)){
-                    if (guilda.functions.canExeInChannel(guilda, message, command)){
-                        const guildaCommand = guilda.commands.get(command)
-                        if (guildaCommand.permission == "admin"){
-                            adminTxt = "🔐";
-                        }else{
-                            adminTxt = ""
-                        }
-                        const txt = `${adminTxt} ${guildaCommand.description}`
-                        guilda.embed.addField(guildaCommand.name,txt)       
+                if (guilda[0].discord_can_exe(message, command)){
+                    const guildaCommand = guilda[0].commands.get(command);
+                    //admin
+                    if (guildaCommand.permission == 'admin'){
+                        var adminTxt = '🔐 ';
+                    }else{
+                        var adminTxt = '';
                     }
+                    //location
+                    if (guildaCommand.limitedLocationForExe){
+                        var locationTxt = '⏬ ';
+                    }else{
+                        var locationTxt =''
+                    }
+                    const txt = adminTxt + locationTxt + guildaCommand.description;
+                    embed.addField(guildaCommand.name,txt);
                 }
             }
+        //un commande en particulier
         }else{
-            if (guilda.functions.hasPermissionToExe(guilda, message, args[0])){
-                if (guilda.functions.canExeInChannel(guilda, message, args[1])){
-                    if (guilda.commands.get(args[1]).permission == "admin"){
-                        adminTxt = "🔐";
-                    }else{
-                        adminTxt = ""
+            if (guilda[0].discord_have_perm_to_exe(message, args[1])){
+                if (guilda[0].discord_command_have_perm_to_exe(message, args[1])){
+                    let command = guilda[0].commands.get(args[1]);
+                    if (command != undefined){
+                        if (command.permission == 'admin'){
+                            adminTxt = '🔐';
+                        }else{
+                            adminTxt = ''
+                        }
+    
+                        txt = `${adminTxt} ${guilda[0].commands.get(args[1]).description}`
+                        embed.addField(guilda[0].commands.get(args[1]).name, txt);
                     }
-                    txt = `${adminTxt} ${guilda.commands.get(args[1]).description}`
-                    guilda.embed.addField(guilda.commands.get(args[1]).name, txt)
                 }
             }else{
-                guilda.embed.addField("vous n'avez pas la permission pour cette commande!")
+                embed.addField('❌'+args[1],'cette commande n\'existe pas pour vous!');
             }
         }
+
+        //envoie
         try{
-            if (guilda["embed"]["fields"][0]["name"]){
-                message.channel.send(guilda.embed)
+            if (embed['fields'][0]['name']){
+                message.channel.send(embed);
             }
         }catch(err){
-
+            //err
         }
+
+        //end
+        delete embed;
     }
 }
