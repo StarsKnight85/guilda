@@ -9,6 +9,9 @@ class Bot {
         this.discord = new Discord.Client();
         //setting on js
         this.setting = this.read_json('./config.json');
+        if (this.setting.token === 'web'){
+            this.setting.token = process.env.TOKEN;
+        }
         //db
         this.sql_create_connection(this.setting.mysql.guilda_database);
         //commands
