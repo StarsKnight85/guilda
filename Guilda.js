@@ -54,10 +54,8 @@ class Bot {
             for (let channel of results){
                 this.channels.set(`${channel.ID_Channel}`, {
                     ID_Channel  : channel.ID_Channel,
-                    nom_Channel : channel.NOM_Channel,
                     admin       : (channel.ADMIN? true : false),
-                    ID_Guild    : channel.ID_Guild,
-                    nom_Guild   : channel.NOM_Guild
+                    ID_Guild    : channel.ID_Guild
                 });
             }
         });

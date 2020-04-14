@@ -23,13 +23,11 @@ module.exports = {
             guilda[0].channels.get(message.channel.id).admin = adminPerm;
         }else{
             //create
-            guilda[0].sql_create_data(new Request('`channels`', '`ID_Channel`, `NOM_Channel`, `ADMIN`, `ID_Guild`, `NOM_Guild`', null, `'${message.channel.id}', '${message.channel.name}', ${adminPerm}, '${message.guild.id}', '${message.guild.name}'`), (result) => {});
+            guilda[0].sql_create_data(new Request('`channels`', '`ID_Channel`, `ADMIN`, `ID_Guild`', null, `'${message.channel.id}', ${adminPerm}, '${message.guild.id}'`), (result) => {});
             guilda[0].channels.set(`${message.channel.id}`, {
                 ID_Channel  : message.channel.id,
-                nom_Channel : message.channel.name,
                 admin       : adminPerm,
                 ID_Guild    : message.guild.id,
-                nom_Guild   : message.guild.name
             });
         }
 
