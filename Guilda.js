@@ -154,13 +154,13 @@ class Bot {
     /**
      * renvoie vrai si la commande peut s'exécuter dans le channel faux sinon
      * @param message le message reçu par le bot
-     * @param {Array} args le contenu du message dévisé en argument 
+     * @param name le contenu du message dévisé en argument 
      */
-    discord_is_right_channel(message, args){
+    discord_is_right_channel(message, name){
         let channel = this.channels.get(message.channel.id);
         if (channel != undefined){
             if (message.guild.id == channel.ID_Guild){
-                if (this.discord_command_have_perm_to_exe(message, args)) {
+                if (this.discord_command_have_perm_to_exe(message, name)) {
                     return true;
                 }
             }
@@ -178,7 +178,7 @@ class Bot {
         let can_exe = false;
         //code
         if (this.commands.get(args[0]).limitedLoactionForExe){
-            if(guilda.discord_is_right_channel(message, args[0])){
+            if(this.discord_is_right_channel(message, args[0])){
                 can_exe = true;
             }
         }else{
