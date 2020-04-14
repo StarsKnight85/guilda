@@ -210,22 +210,22 @@ class Bot {
      * lance la connexion avec MySQL
      */
     sql_connect(){
-        /*this.mysql_db.connect((err)=>{
+        this.mysql_db.connect((err)=>{
             if(err){
                 throw err
             };
             console.log('Database connecté!');
-        });*/
+        });
     }
 
     /**
      * lance la déconnexion avec MySQL
      */
     sql_diconnect(){
-        /*this.mysql_db.end((err) => {
+        this.mysql_db.end((err) => {
             if(err) throw err;
             console.log('Database déconnecté!');
-        });*/
+        });
     }
 
     /**
@@ -234,7 +234,6 @@ class Bot {
      * @param callback fonction callback
      */
     sql_read_data(request, callback){
-        this.sql_connect();
         let sql_request = `SELECT ${request.target} FROM ${request.table} ${(request.conditions != null)? 'WHERE ' + request.conditions : ''}`;
         this.mysql_db.query(sql_request,(err, rows, fields) => {
             if(err) {
@@ -242,7 +241,6 @@ class Bot {
             }
             callback(rows);
         });
-        this.sql_diconnect();
     }
 
     /**
@@ -251,7 +249,6 @@ class Bot {
      * @param callback fonction callback
      */
     sql_update_data(request, callback){
-        this.sql_connect();
         let sql_request = `UPDATE ${request.table} SET ${request.target} WHERE ${(request.conditions != null)? request.conditions : 0}`;
         this.mysql_db.query(sql_request,(err, rows, fields) => {
             if(err) {
@@ -259,8 +256,7 @@ class Bot {
             }
             callback(rows);
         });
-        this.sql_diconnect();
-    }
+   }
 
     /**
      * créer les données dans la database db selon la requête request
@@ -268,7 +264,6 @@ class Bot {
      * @param callback fonction callback
      */
     sql_create_data(request, callback){
-        this.sql_connect();
         let sql_request = `INSERT INTO ${request.table}(${request.target}) VALUES (${request.values})`;
         this.mysql_db.query(sql_request,(err, rows, fields) => {
             if(err) {
@@ -276,7 +271,6 @@ class Bot {
             }
             callback(rows);
         });
-        this.sql_diconnect();
     }
 
     /**
@@ -285,7 +279,6 @@ class Bot {
      * @param callback fonction callback
      */
     sql_delete_data(request, callback){
-        this.sql_connect();
         let sql_request = `DELETE FROM ${request.table} WHERE ${(request.conditions == null? 0 : request.conditions)}`;
         this.mysql_db.query(sql_request, (err, rows, fields) => {
             if(err){
@@ -294,7 +287,6 @@ class Bot {
                 callback(rows);
             }
         });
-        this.sql_diconnect();
     }
 };
 

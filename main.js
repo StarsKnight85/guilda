@@ -13,6 +13,7 @@ for (init_function of json.functions){
 }
 
 guilda.discord.on('ready', () => {
+    this.sql_connect();
     console.log(`${guilda.discord.user.tag} is online at ${guilda.send_date()}`);
 });
 
