@@ -1,60 +1,32 @@
-//lib
-const Discord = require('discord.js');
-const fs = require('fs');
-const guilda = new Discord.Client();
-//function
-guilda.functions = require('./functions.js')
-// guilda.functions = GuildaFunction;
+const Bot = require('./Guilda.js');
+const Request = require('./Request.js');
 
-//setting
-guilda.setting = guilda.functions.loadData("./setting.json");
+const guilda = new Bot();
 
-//token
-if (guilda.setting.token == "web"){
-    guilda.setting.token = process.env.TOKEN;
+//lance les fonctions d'init
+const json = guilda.read_json('./init.json');
+for (init_function of json.functions){
+    const init_command = guilda.init_commands.get(init_function);
+    if (init_command != undefined){
+        init_command.execute([guilda]);
+    }
 }
 
-//commands
-guilda.commands = new Discord.Collection();
-const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
-for(const file of commandFiles){
-    const command = require(`./commands/${file}`);
-    guilda.commands.set(command.name, command);
-}
-
-//---- CODE ----//
-
-guilda.on('ready', () => {
-    console.log(`${guilda.user.tag} is online at ${guilda.functions.date()}`);
-    guilda.user.setActivity(guilda.setting.activity.name, {type : guilda.setting.activity.type}).catch(console.error);
+guilda.discord.on('ready', () => {
+    console.log(`${guilda.discord.user.tag} is online at ${guilda.send_date()}`);
 });
 
-guilda.on('message', message => {
-    if(message.content.startsWith(guilda.setting.PREFIX)){
-        let args = message.content.substring(guilda.setting.PREFIX.length).split(" ");
+guilda.discord.on('message', message => {
+    if (message.content.startsWith(guilda.setting.prefix)){
+        let args = message.content.substring(guilda.setting.prefix.length).split(" ");
         try{
-            if (args[0] === "addChannel"){
-                if (guilda.commands.get(args[0]).permission == "admin"){
-                    guilda.functions.log(message,args[0],guilda.functions.date(),true)
-                    guilda.commands.get(args[0]).execute(guilda, message, args);            
-                }
-            }else if (guilda.functions.isInChannel(guilda, message)){
-                if (guilda.commands.get(args[0]).permission == "admin"){
-                    if (guilda.functions.checkAdmin(message)){
-                        if (guilda.functions.isInAdminChannel(guilda, message)){
-                            guilda.functions.log(message,args[0],guilda.functions.date(),true)
-                            guilda.commands.get(args[0]).execute(guilda, message, args);    
-                        }
-                    }
-                }else if (guilda.commands.get(args[0]).permission == "all"){
-                    guilda.functions.log(message,args[0],guilda.functions.date(),false)
-                    guilda.commands.get(args[0]).execute(guilda, message, args);
-                };    
+            if(guilda.discord_have_perm_to_exe(message, args[0])){
+                guilda.discord_execute_command(message, args);
             }
         }catch(err){
-           console.log('#ERROR',err)//debug
+            console.log("#ERROR at ", guilda.send_date(), " : ", err);
         }
-    };
+    }
 });
 
-guilda.login(guilda.setting.token);
+guilda.discord.login(guilda.setting.token);
